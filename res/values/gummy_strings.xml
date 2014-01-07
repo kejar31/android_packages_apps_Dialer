@@ -61,4 +61,8 @@
     <string name="stop_call_playback">Stop</string>
     <string name="call_playback_error_message">Failed to play recording</string>
 
+    <string name="call_log_all_calls_header">All calls</string>
+    <string name="slot_name">SIM</string>
+    <string name="call_log_show_all_slots">All SIMs</string>
+
 </resources>
