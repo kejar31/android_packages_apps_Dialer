@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2013 The CyanogenMod Project
+     Copyright (C) 2012-2014 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,21 +15,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <plurals name="hour">
-        <item quantity="one">%d hr</item>
-        <item quantity="other">%d hrs</item>
-    </plurals>
-    <plurals name="minute">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
-    </plurals>
-    <plurals name="second">
-        <item quantity="one">%d sec</item>
-        <item quantity="other">%d secs</item>
-    </plurals>
-
-    <plurals name="call">
-        <item quantity="one">%d call</item>
-        <item quantity="other">%d calls</item>
-    </plurals>
+  <string name="dialpad_2_2_letters">דהו</string>
+  <string name="dialpad_3_2_letters">אבג</string>
+  <string name="dialpad_4_2_letters">מנ</string>
+  <string name="dialpad_5_2_letters">יכל</string>
+  <string name="dialpad_6_2_letters">זחט</string>
+  <string name="dialpad_7_2_letters">רשת</string>
+  <string name="dialpad_8_2_letters">צק</string>
+  <string name="dialpad_9_2_letters">סעפ</string>
 </resources>

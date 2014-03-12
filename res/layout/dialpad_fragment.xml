@@ -35,7 +35,6 @@
         android:layoutDirection="ltr"
         android:background="@color/background_dialpad" >
 
-
         <!-- Text field and possibly soft menu button above the keypad where
              the digits are displayed. -->
         <LinearLayout
@@ -43,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="@integer/dialpad_layout_weight_digits"
-            android:layout_marginTop="@dimen/dialpad_vertical_margin"
-            android:gravity="center" >
+            android:gravity="center"
+            android:background="@color/background_digits_dialpad" >
 
             <com.android.dialer.dialpad.DigitsEditText
                 android:id="@+id/digits"
@@ -111,21 +110,13 @@
             android:paddingLeft="5dip"
             android:paddingRight="5dip" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dialpad_vertical_margin"
-            android:background="#66000000" />
-
-        <TableLayout
+        <LinearLayout
             android:id="@+id/dialButtonContainer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fake_action_bar_height"
             android:layout_gravity="center_horizontal"
             android:background="@color/dialpad_call_button_color"
             android:layoutDirection="locale">
-        <TableRow
-            android:layout_height="match_parent"
-            android:layout_weight="1">
             <ImageButton
                 android:id="@+id/call_history_on_dialpad_button"
                 android:layout_height="match_parent"
@@ -164,8 +155,7 @@
                 android:background="@drawable/btn_call"
                 android:contentDescription="@string/description_dial_button"
                 android:src="@drawable/ic_add_group_holo_dark" />
-            </TableRow>
-        </TableLayout>
+        </LinearLayout>
 
         <!-- "Dialpad chooser" UI, shown only when the user brings up the
              Dialer while a call is already in progress.
