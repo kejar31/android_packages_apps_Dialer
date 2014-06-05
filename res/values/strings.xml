@@ -719,7 +719,9 @@
          [CHAR LIMIT=NONE]
     -->
     <string name="contact_tooltip">Tap image to see all numbers or press and hold to reorder</string>
-    <string name="calllog_search_hint">"Search call log"</string>
+
+    <!-- Content description for dismiss button on badge. [CHAR LIMIT=NONE] -->
+    <string name="description_dismiss">Dismiss</string>
 
     <!-- Remove button that shows up when contact is long-pressed. [CHAR LIMIT=NONE] -->
     <string name="remove_contact">Remove</string>
@@ -750,4 +752,5 @@
          Do not translate. -->
     <string name="tab_font_family">sans-serif</string>
 
+    <string name="calllog_search_hint">Search call log</string>
 </resources>

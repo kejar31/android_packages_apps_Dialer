@@ -30,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/shadow_fade_up" />
-
     <view class="com.android.dialer.dialpad.DialpadFragment$HoverIgnoringLinearLayout"
         android:id="@+id/top"
         android:animateLayoutChanges="true"
@@ -44,9 +43,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_weight="@integer/dialpad_layout_weight_digits"
-            android:layout_marginTop="@dimen/dialpad_vertical_margin"
-            android:gravity="center" />
+            android:background="@color/dialpad_separator_line_color" />
 
         <Space
             android:layout_width="match_parent"
