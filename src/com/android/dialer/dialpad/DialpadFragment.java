@@ -1791,7 +1791,6 @@ public class DialpadFragment extends Fragment
         ((DialpadSlidingLinearLayout) getView()).setYFraction(yFraction);
     }
 
-<<<<<<< HEAD
     /**
      * Settingsobserver to listen for dialpad padding changes
      */
@@ -1818,13 +1817,13 @@ public class DialpadFragment extends Fragment
                 setupKeypad(mFragmentView);
             }
         }
-=======
+    }
+
     private Resources getResourcesForLocale(Locale locale) {
         Configuration defaultConfig = getResources().getConfiguration();
         Configuration overrideConfig = new Configuration(defaultConfig);
         overrideConfig.setLocale(locale);
         Context localeContext = getActivity().createConfigurationContext(overrideConfig);
         return localeContext.getResources();
->>>>>>> fcffaad... Read option for t9 search input locale and refresh smart dial db when locale changes
     }
 }
