@@ -426,7 +426,7 @@ public class DialpadFragment extends Fragment
         mDigits.setOnLongClickListener(this);
         mDigits.addTextChangedListener(this);
         PhoneNumberFormatter.setPhoneNumberFormattingTextWatcher(getActivity(), mDigits);
-        setupKeypad(fragmentView);
+        setupKeypad(mFragmentView);
 
         mDelete = mFragmentView.findViewById(R.id.deleteButton);
         if (mDelete != null) {
