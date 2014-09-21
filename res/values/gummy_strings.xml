@@ -56,4 +56,9 @@
     <!-- Forward lookup -->
     <string name="nearby_places">Nearby places</string>
     <string name="people">People</string>
+
+    <string name="call_log_all_calls_header">All calls</string>
+    <string name="slot_name">SIM</string>
+    <string name="call_log_show_all_slots">All SIMs</string>
+
 </resources>

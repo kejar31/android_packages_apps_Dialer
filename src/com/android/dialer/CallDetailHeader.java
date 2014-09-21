@@ -55,6 +55,7 @@ import com.android.dialer.calllog.PhoneNumberDisplayHelper;
 import com.android.dialer.calllog.PhoneNumberUtilsWrapper;
 
 import android.provider.ContactsContract.DisplayNameSources;
+import com.android.internal.telephony.MSimConstants;
 
 public class CallDetailHeader {
     private static final String TAG = "CallDetail";
@@ -71,6 +72,7 @@ public class CallDetailHeader {
     private ContactPhotoManager mContactPhotoManager;
 
     private String mNumber;
+    private int mSubscription;
 
     private TextView mHeaderTextView;
     private View mHeaderOverlayView;
@@ -230,7 +232,7 @@ public class CallDetailHeader {
         }
     }
 
-    public void updateViews(String number, int numberPresentation, Data data) {
+    public void updateViews(String number, int numberPresentation, Data data, int subscription) {
         // Cache the details about the phone number.
         final PhoneNumberUtilsWrapper phoneUtils = new PhoneNumberUtilsWrapper();
         final boolean isVoicemailNumber = phoneUtils.isVoicemailNumber(number);
@@ -243,6 +245,7 @@ public class CallDetailHeader {
         boolean skipBind = false;
 
         mNumber = number;
+        mSubscription = subscription;
         mCanPlaceCallsTo = PhoneNumberUtilsWrapper.canPlaceCallsTo(number, numberPresentation);
 
         // Let user view contact details if they exist, otherwise add option to create new
@@ -317,10 +320,16 @@ public class CallDetailHeader {
                 mPhoneNumberDisplayHelper.getDisplayNumber(
                         dataNumber, data.getNumberPresentation(), data.getFormattedNumber());
 
+            Intent intent = CallUtil.getCallIntent(mNumber);
+            if (mSubscription != -1) {
+                intent.putExtra(MSimConstants.SUBSCRIPTION_KEY, mSubscription);
+                Log.d(TAG, "Start the activity and the call log sub is: " + mSubscription);
+            }
+
             ViewEntry entry = new ViewEntry(
                     mResources.getString(R.string.menu_callNumber,
                         forceLeftToRight(displayNumber)),
-                    CallUtil.getCallIntent(number),
+                    intent,
                     mResources.getString(R.string.description_call, nameOrNumber));
 
             // Only show a label if the number is shown and it is not a SIP address.
@@ -470,8 +479,13 @@ public class CallDetailHeader {
                 TelephonyManager tm = (TelephonyManager)
                         mActivity.getSystemService(Context.TELEPHONY_SERVICE);
                 if (tm.getCallState() == TelephonyManager.CALL_STATE_IDLE) {
-                    mActivity.startActivity(CallUtil.getCallIntent(
-                            Uri.fromParts(CallUtil.SCHEME_TEL, mNumber, null)));
+                    Intent intent = CallUtil.getCallIntent(
+                            Uri.fromParts(CallUtil.SCHEME_TEL, mNumber, null));
+                    if (mSubscription != -1) {
+                        intent.putExtra(MSimConstants.SUBSCRIPTION_KEY, mSubscription);
+                        Log.d(TAG, "Start the activity and the call log sub is: " + mSubscription);
+                    }
+                    mActivity.startActivity(intent);
                     return true;
                 }
             }

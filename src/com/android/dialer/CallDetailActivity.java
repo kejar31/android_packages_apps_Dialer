@@ -66,6 +66,7 @@ import com.android.dialer.voicemail.VoicemailPlaybackFragment;
 import com.android.dialer.voicemail.VoicemailStatusHelper;
 import com.android.dialer.voicemail.VoicemailStatusHelper.StatusMessage;
 import com.android.dialer.voicemail.VoicemailStatusHelperImpl;
+import com.android.internal.telephony.MSimConstants;
 
 import java.util.List;
 
@@ -110,6 +111,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
 
     private String mNumber = null;
     private String mDefaultCountryIso;
+    private int mSubscription;
 
     /* package */ LayoutInflater mInflater;
     /* package */ Resources mResources;
@@ -193,6 +195,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
         CallLog.Calls.COUNTRY_ISO,
         CallLog.Calls.GEOCODED_LOCATION,
         CallLog.Calls.NUMBER_PRESENTATION,
+        CallLog.Calls.SUBSCRIPTION
     };
 
     static final int DATE_COLUMN_INDEX = 0;
@@ -202,6 +205,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
     static final int COUNTRY_ISO_COLUMN_INDEX = 4;
     static final int GEOCODED_LOCATION_COLUMN_INDEX = 5;
     static final int NUMBER_PRESENTATION_COLUMN_INDEX = 6;
+    static final int SUBSCRIPTION = 7;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -216,7 +220,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
         mCallTypeHelper = new CallTypeHelper(getResources());
         mPhoneNumberHelper = new PhoneNumberDisplayHelper(mResources);
         mCallDetailHeader = new CallDetailHeader(this, mPhoneNumberHelper);
-        mPhoneCallDetailsHelper = new PhoneCallDetailsHelper(mResources, mCallTypeHelper,
+        mPhoneCallDetailsHelper = new PhoneCallDetailsHelper(this, mCallTypeHelper,
                 new PhoneNumberUtilsWrapper());
         mVoicemailStatusHelper = new VoicemailStatusHelperImpl();
         mAsyncQueryHandler = new CallDetailActivityQueryHandler(this);
@@ -364,10 +368,11 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
                 PhoneCallDetails firstDetails = details[0];
                 mNumber = firstDetails.number.toString();
                 final int numberPresentation = firstDetails.numberPresentation;
+                mSubscription = firstDetails.subscription;
 
                 // Set the details header, based on the first phone call.
                 mPhoneCallDetailsHelper.setCallDetailsHeader(mHeaderTextView, firstDetails);
-                mCallDetailHeader.updateViews(mNumber, numberPresentation, firstDetails);
+                mCallDetailHeader.updateViews(mNumber, numberPresentation, firstDetails, mSubscription);
 
                 mHasEditNumberBeforeCallOption = mCallDetailHeader.canEditNumberBeforeCall();
                 mHasTrashOption = hasVoicemail();
@@ -454,6 +459,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
             final int callType = callCursor.getInt(CALL_TYPE_COLUMN_INDEX);
             String countryIso = callCursor.getString(COUNTRY_ISO_COLUMN_INDEX);
             final String geocode = callCursor.getString(GEOCODED_LOCATION_COLUMN_INDEX);
+            final int subscription = callCursor.getInt(SUBSCRIPTION);
 
             if (TextUtils.isEmpty(countryIso)) {
                 countryIso = mDefaultCountryIso;
@@ -495,7 +501,7 @@ public class CallDetailActivity extends Activity implements ProximitySensorAware
             return new PhoneCallDetails(number, numberPresentation,
                     formattedNumber, countryIso, geocode,
                     new int[]{ callType }, date, duration,
-                    nameText, numberType, numberLabel, lookupUri, photoUri, sourceType);
+                    nameText, numberType, numberLabel, lookupUri, photoUri, sourceType, subscription);
         } finally {
             if (callCursor != null) {
                 callCursor.close();
